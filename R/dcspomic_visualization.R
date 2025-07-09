@@ -12,6 +12,8 @@ plot_volcano <- function(dcspomic, alpha_level=0.05){
     dplyr::pull(line) |>
     paste(collapse = "\n")
 
+  max_abs <- max(abs(dcspomic@results$differential_testing$log2fc), na.rm = TRUE)
+
   p <- dcspomic@results$differential_testing |>
     dplyr::arrange(FDR) |>
     dplyr::mutate(neg_log10_padj = -log10(FDR),
@@ -30,6 +32,7 @@ plot_volcano <- function(dcspomic, alpha_level=0.05){
     tidyplots::add_reference_lines(y = -log10(alpha)) |>
     tidyplots::add_data_labels_repel(data = tidyplots::min_rows(FDR, n_sig), label = ij_id,
                                      color = "#000000", min.segment.length = 0, background = TRUE) |>
+    tidyplots::adjust_x_axis(limits=c(-max_abs, max_abs)) |>    # Set symmetric x-limits
     tidyplots::adjust_x_axis_title("$Log[2]~fold~change$") |>
     tidyplots::adjust_y_axis_title("$-Log[10]~italic(P)~adjusted$") |>
     tidyplots::adjust_caption(paste0("alpha = ", alpha)) |>

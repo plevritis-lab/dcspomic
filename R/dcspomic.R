@@ -61,9 +61,14 @@ run_random_effects_meta_analysis <- function(colocalization_distributions, metho
   pooled_estimates <- list()
   models <- list()
   for(pair in cell_pairs) {
-    yi <- colocalization_distributions |> dplyr::filter(i_j == pair) |> dplyr::pull(colocalization_stat)
-    vi <- colocalization_distributions |> dplyr::filter(i_j == pair) |> dplyr::pull(colocalization_var)
-    slab <- colocalization_distributions |> dplyr::filter(i_j == pair) |> dplyr::pull(sample)
+    yi <- colocalization_distributions |> dplyr::filter(i_j == pair,!is.na(colocalization_var),
+                                                        !is.na(colocalization_stat)) |> dplyr::pull(colocalization_stat)
+    vi <- colocalization_distributions |> dplyr::filter(i_j == pair, !is.na(colocalization_var),
+                                                        !is.na(colocalization_stat)) |> dplyr::pull(colocalization_var)
+    # slab <- colocalization_distributions |> dplyr::filter(i_j == pair, !is.na(colocalization_var)) |> dplyr::pull(sample)
+    slab <- colocalization_distributions |> dplyr::filter(i_j == pair,
+                                                          !is.na(colocalization_var),
+                                                          !is.na(colocalization_stat)) |> pull(sample)
 
     if(length(yi) < 2) {
       models[[pair]] <- NULL
