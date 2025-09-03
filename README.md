@@ -7,6 +7,7 @@ devtools::install_github("plevritis-lab/dcspomic")
 
 library(spomic) # Companion package for calculating spatial statistics
 library(dcspomic)
+library(dplyr)
 ```
 
 ## Tutorial
@@ -54,4 +55,49 @@ plot_spomic(group1_spomics[[1]])
 plot_spomic(group2_spomics[[1]])
 ```
 
+### Calculating spatial statistics
+```r
+# Calculate the L-cross function between all cell type pairs
+# fixed_distance = FALSE should be used when there is no specific distance to consider the interaction zone
+# and that multiple distances will probably be tested throughout the course of your analysis
+for(i in 1:length(group1_spomics)) {
+  spomic <- group1_spomics[[i]]
+  spomic <- set_spomic_hyperparameters(spomic, colocalization_type = "Lcross", fixed_distance = FALSE)
+  spomic <- get_spatial_stats(spomic)
+  group1_spomics[[i]] <- spomic
+}
+
+for(i in 1:length(group2_spomics)) {
+  spomic <- group2_spomics[[i]]
+  spomic <- set_spomic_hyperparameters(spomic, colocalization_type = "Lcross", fixed_distance = FALSE)
+  spomic <- get_spatial_stats(spomic)
+  group2_spomics[[i]] <- spomic
+}
+
+# You can inspect the L-function curves for different samples
+group1_spomics[[1]]@results$colocalization_bootstrap[["(A)_(B)"]] |> plot()
+group2_spomics[[1]]@results$colocalization_bootstrap[["(A)_(B)"]] |> plot()
+```
+
+### Run differential colocalization analysis
+```r
+# First, we create the DC-SPOMIC object
+dcspomic <- create_dcspomic(
+  group1_name = "Group 1",
+  group1_spomics = group1_spomics,
+  group2_name = "Group 2",
+  group2_spomics = group2_spomics)
+
+# Then we set the hyperparameters
+dcspomic <- set_dcspomic_hyperparameters(
+  dcspomic,
+  r = 10, # Distance between points to consider
+  colocalization_type = "Lcross", # Colocalization statistic
+  tau_estimator = "SJ") # Random-effects meta-analysis tau2 estimator (from `metafor` package)
+
+dcspomic <- run_dcspomic(dcspomic)
+
+# Inspect results
+
+```
 
