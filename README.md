@@ -98,6 +98,9 @@ dcspomic <- set_dcspomic_hyperparameters(
 dcspomic <- run_dcspomic(dcspomic)
 
 # Inspect results
+dcspomic@results$differential_testing
 
+alpha <- 0.05
+plot_volcano(dcspomic, alpha = alpha)
 ```
 
