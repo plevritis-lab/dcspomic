@@ -11,6 +11,8 @@ library(dplyr)
 ```
 
 ## Tutorial
+The code blocks below simulate some spatial data of three different cell types: (A), (B), and (C). Group 1 randomly distributes the cells across the spatial area, and Group 2 has a circular concentration of cells in closer proximity. After simulating the data, the tutorial shows some of the major functions of the `spomic` and `dcspomic` R packages. For the simulated data, the cross L function is computed for every distinct pair of cell types: (A)\_(A), (A)\_(B), (A)\_(C), (B)\_(A), (B)\_(B), (B)\_(C), (C)\_(A), (C)\_(B), and (C)\_(C). Finally, the tutorial demonstrates how to create a dcspomic object in R, and to apply the random-effects meta-analysis and spatial bootstrapping pipeline. 
+
 ### Creating `spomic` objects
 ```r
 # Simulate group 1 and turn into spomic objects
@@ -103,4 +105,5 @@ dcspomic@results$differential_testing
 alpha <- 0.05
 plot_volcano(dcspomic, alpha = alpha)
 ```
+
 
