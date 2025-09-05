@@ -6,9 +6,12 @@
 devtools::install_github("plevritis-lab/spomic")
 devtools::install_github("plevritis-lab/dcspomic")
 
+# install.packages(c("dplyr", "pbapply"))
+
 library(spomic) # Companion package for calculating spatial statistics
 library(dcspomic)
 library(dplyr)
+library(pbapply)
 ```
 
 ## Tutorial
@@ -37,9 +40,9 @@ for(i in 1:3){
 # Simulate group 2 and turn into spomic objects
 group2_spomics <- list()
 for(j in 1:3){
-  n <- rnorm(n=1, mean=200, sd=100)
-  x <- rnorm(n=n, mean=50, sd=5)
-  y <-  rnorm(n=n, mean=50, sd=5)
+  n <- rnorm(n=1, mean=400, sd=100)
+  x <- rnorm(n=n, mean=50, sd=20)
+  y <-  rnorm(n=n, mean=50, sd=20)
   cell_type <- sample(x=c("(A)","(B)","(C)"), 
                       size=n, 
                       replace = TRUE)
@@ -48,6 +51,7 @@ for(j in 1:3){
                    x = x, 
                    y = y, 
                    cell_type = cell_type)
+  df <- df |> filter(between(x, 0, 100) & between (y, 0, 100))
   group2_spomics[[j]] <- create_spomic(df)
 }
 ```
