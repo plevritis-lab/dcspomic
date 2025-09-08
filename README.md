@@ -11,7 +11,6 @@ devtools::install_github("plevritis-lab/dcspomic")
 library(spomic) # Companion package for calculating spatial statistics
 library(dcspomic)
 library(dplyr)
-library(pbapply)
 ```
 
 ## Tutorial
