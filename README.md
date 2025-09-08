@@ -6,7 +6,7 @@
 devtools::install_github("plevritis-lab/spomic")
 devtools::install_github("plevritis-lab/dcspomic")
 
-# install.packages(c("dplyr", "pbapply"))
+# install.packages("dplyr")
 
 library(spomic) # Companion package for calculating spatial statistics
 library(dcspomic)
