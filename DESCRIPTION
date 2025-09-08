@@ -1,12 +1,18 @@
 Package: dcspomic
-Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Differential Colocalization Analysis of Single-Cell Spatial Omics Data
+Version: 0.0.0.9000
+Authors@R: 
+    person("Jacob", "Chang", , "jachang4@stanford.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Tool for performing differential colocalization analysis across groups and samples of spatial omics data
+License: MIT license
+Imports: 
+  spomic, 
+  dplyr, 
+  metafor, 
+  tidyr, 
+  tidyplots, 
+  cowplot
 Encoding: UTF-8
-LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
